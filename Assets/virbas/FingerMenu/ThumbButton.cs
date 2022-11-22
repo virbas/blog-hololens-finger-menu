@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 
 using UnityEngine;
 
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
-
 
 namespace Apprentice.Components
 {
@@ -16,8 +14,8 @@ namespace Apprentice.Components
     [SerializeField] TrackedHandJoint trackedJoint;
     [SerializeField] float clickThreshold = 1f;
 
-#if UNITY_EDITOR
-    private float thumbClickDistanceThreshold = 0.035f;
+#if UNITY_EDITOR // for testing in the editor. Set it to 0.1 o trigger index action as soon as the hand is visible
+    private float thumbClickDistanceThreshold = 0.1f;
 #else
       private float thumbClickDistanceThreshold = 0.03f;
 #endif
@@ -31,6 +29,7 @@ namespace Apprentice.Components
 
     private State state = State.NONE;
 
+    // Coroutine to trigger State after clickThreshold passed
     private Coroutine pressCoroutine;
 
     private Handedness trackedHand = Handedness.Right;
@@ -56,7 +55,6 @@ namespace Apprentice.Components
         // Check if thumb tip is available for the tracked hand
         if (HandJointUtils.TryGetJointPose(TrackedHandJoint.ThumbTip, this.trackedHand, out thumbTip))
         {
-          //if (true)
           found = true;
 
           // check if thumbtip is touching the tracked joint
@@ -93,7 +91,6 @@ namespace Apprentice.Components
         }
         state = State.NONE;
       }
-
     }
 
     private IEnumerator BeginPress()
@@ -114,7 +111,6 @@ namespace Apprentice.Components
     {
       onClick.Invoke();
     }
-
 
     void OnDisable()
     {

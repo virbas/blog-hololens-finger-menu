@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/virbas/FingerMenuScene.unity
+    guid: 23b07372dfb1dd943b689d2ec8039458
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 7b563b59bcc4fb04191b2d8671834109, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: fdb53721aaf51be4e99c56bd1baa0990, type: 2}

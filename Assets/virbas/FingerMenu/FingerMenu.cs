@@ -1,12 +1,7 @@
-using System;
-
 using UnityEngine;
 
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
-
-// using Apprentice.Helpers;
-
 
 namespace Apprentice.Components
 {
@@ -14,32 +9,28 @@ namespace Apprentice.Components
   {
     [SerializeField] private Transform thumbTipLight;
 
-    [SerializeField]
-    private GameObject buttonsContainer;
+    [SerializeField] private GameObject buttonsContainer;
 
     private float flatHandThreshold = 60.0f; // Set to 60 if you want to debug in editor
     private float facingCameraTrackingThreshold = 60.0f;
 
-
-    //
-    //public Handedness trackedHand  {get; public set;} = Handedness.Right;
-
-    [SerializeField]
-    private Handedness trackedHand = Handedness.Right;
+    [SerializeField] private Handedness trackedHand = Handedness.Right;
 
     public Handedness TrackedHand => trackedHand;
 
     protected void Update()
     {
+      // check if the hand is visible
       if (HandJointUtils.TryGetJointPose(TrackedHandJoint.Palm, this.trackedHand, out MixedRealityPose palmPose))
       {
         if (IsPalmFacingHead(palmPose))
         {
           EnableInteraction();
-          UpdateButtons();
+          UpdateThumbLight();
           return;
         }
       }
+
       DisableInteraction();
     }
 
@@ -48,7 +39,6 @@ namespace Apprentice.Components
       if (!buttonsContainer.gameObject.activeSelf)
       {
         buttonsContainer.SetActive(true);
-        //FingerPointer.Enable();
       }
     }
 
@@ -57,11 +47,10 @@ namespace Apprentice.Components
       if (buttonsContainer.gameObject.activeSelf)
       {
         buttonsContainer.SetActive(false);
-        // FingerPointer.Disable();
       }
     }
 
-    private void UpdateButtons()
+    private void UpdateThumbLight()
     {
       MixedRealityPose thumbTip;
 
@@ -84,7 +73,6 @@ namespace Apprentice.Components
         var handNormal = Vector3.Cross(indexTipPose.Position - palmPose.Position,
                                        ringTipPose.Position - indexTipPose.Position).normalized;
         handNormal *= (trackedHand == Handedness.Right) ? 1.0f : -1.0f;
-
 
         if (Vector3.Angle(palmPose.Up, handNormal) > flatHandThreshold)
         {
