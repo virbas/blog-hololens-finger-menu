@@ -1,6 +1,6 @@
 # Fingers menu for Hololens + MRTK2
 
-![Preview](/preview.gif?raw=true "Optional Title")
+![Preview](/preview.webp?raw=true "Optional Title")
 
 [Youtube](https://www.youtube.com/watch?v=CRmsXuNiCOs)
 
